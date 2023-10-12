@@ -1,0 +1,23 @@
+[Unit]
+Description=person_detector_cam1
+After=syslog.target
+After=network.target
+
+
+[Service]
+Type=simple
+PIDFile=/root/house_guard/cam_1/guard_person.pid
+WorkingDirectory=/root/house_guard/cam_1
+
+User=root
+Group=root
+
+
+OOMScoreAdjust=-1000
+
+ExecStart=taskset --cpu-list 5,6 python3 /root/house_guard/cam_1/guard_person_detector.py
+TimeoutSec=6000
+
+Restart=always
+[Install]
+WantedBy=multi-user.target
